@@ -12,7 +12,6 @@ module.exports = function generateWebsiteProcessor(log) {
   var templates = [
     'index.html',
     'views/content.html',
-    'views/footer.html',
     'views/main.html',
     'views/navbar.html',
     'views/sidebar.html',

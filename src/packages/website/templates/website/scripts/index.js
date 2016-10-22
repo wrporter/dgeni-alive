@@ -32,7 +32,7 @@ angular.module('docApp', ['ngMaterial'])
         key: nav.id,
         fullscreen: nav.fullscreen
       };
-    })
+    });
 
     $provide.constant('NAV', nav);
   })
@@ -71,5 +71,4 @@ angular.module('docApp', ['ngMaterial'])
         });
       });
     });
-  })
-;
+  });

@@ -15,6 +15,7 @@ var DEFAULT_PACKAGES = [
   require('./packages/jsdoc-ext'),
   require('./packages/ngdoc-ext'),
   require('./packages/links-ext'),
+  require('./packages/examples-ext'),
   require('./packages/website')
 ];
 
@@ -65,6 +66,12 @@ function configurePackage(p) {
       });
 
       computeIdsProcessor.idTemplates.push({
+        docTypes: ['component'],
+        idTemplate: 'module:${module}.${docType}:${name}',
+        getAliases: getAliases
+      });
+
+      computeIdsProcessor.idTemplates.push({
         docTypes: ['controller'],
         idTemplate: 'module:${module}.${docType}:${name}',
         getAliases: getAliases
@@ -86,6 +93,12 @@ function configurePackage(p) {
         docTypes: ['area'],
         pathTemplate: '${area}',
         outputPathTemplate: 'partials/${area}.html'
+      });
+
+      computePathsProcessor.pathTemplates.push({
+        docTypes: ['component'],
+        pathTemplate: '${area}/${module}/${docType}/${name}',
+        outputPathTemplate: 'partials/${area}/${module}/${docType}/${name}.html'
       });
 
       computePathsProcessor.pathTemplates.push({
@@ -123,6 +136,9 @@ function configurePackage(p) {
         pathTemplate: '${area}/${moduleName}/${groupType}',
         outputPathTemplate: 'partials/${area}/${moduleName}/${groupType}.html'
       });
+    })
+    .config(function(renderDocsProcessor) {
+      renderDocsProcessor.extraData.deploymentTarget = 'default';
     })
     // workaround for https://github.com/angular/dgeni-packages/issues/185
     .config(function(extractAccessTransform) {
@@ -170,6 +186,32 @@ function DocGen() {
           include: sourceInfo
         };
       })));
+    });
+    return this;
+  };
+
+  /**
+   * Sets up the dependencies that will be included for rendering examples in the docs. Include scripts under
+   * dependencies.scripts and stylesheets under dependencies.stylesheets
+   *
+   * @param {Object} dependencies - scripts and stylesheets
+   * @returns {DocGen}
+   */
+  this.exampleDependencies = function(dependencies) {
+    this.Package().config(function(generateExamplesProcessor, generateProtractorTestsProcessor) {
+      var deployments = [
+        {
+          name: 'default',
+          examples: {
+            commonFiles: {
+              scripts: dependencies.scripts,
+              stylesheets: dependencies.stylesheets
+            }
+          }
+        }
+      ];
+      generateExamplesProcessor.deployments = deployments;
+      generateProtractorTestsProcessor.deployments = deployments;
     });
     return this;
   };
