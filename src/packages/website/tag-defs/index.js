@@ -1,3 +1,3 @@
 module.exports = [
-    require('./fullscreen-tag')
+  require('./fullscreen-tag')
 ];

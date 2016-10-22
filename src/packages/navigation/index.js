@@ -7,7 +7,7 @@ var path = require('path');
  */
 module.exports = new Package('navigation', [])
 
-  // Add in the real processors for this package
+// Add in the real processors for this package
   .processor(require('./processors/navigation'))
 
   // Add more tag definitions
@@ -18,5 +18,4 @@ module.exports = new Package('navigation', [])
   // add navigation area mappers
   .config(function(generateNavigationProcessor, getInjectables) {
     generateNavigationProcessor.addMappers(getInjectables(require('./processors/nav-area-mapper')));
-  })
-;
+  });

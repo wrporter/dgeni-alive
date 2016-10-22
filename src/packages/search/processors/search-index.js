@@ -26,24 +26,23 @@ module.exports = function generateSearchIndexProcessorFactory(aliasMap, log, ren
   return {
     $runAfter: ['inlineTagProcessor'],
     $runBefore: ['writing-files'],
-    errorRate: function (v) {
+    errorRate: function(v) {
       if (v) {
         errorRate = v;
         return this;
       }
       return errorRate;
     },
-    $process: function generateSearchIndexProcessor (docs) {
+    $process: function generateSearchIndexProcessor(docs) {
 
       var tokens = [];
       var buffer = new ByteBuffer(0);
 
-      var index = docs.filter(function (v) {
+      var index = docs.filter(function(v) {
         // build search index for rendered docs only
         // do not dig down to the document sources
         // and skip extra content
-        return ['componentGroup', 'config', 'nav-data', 'website'].indexOf(v.docType) < 0 &&
-               !!v.renderedContent;
+        return ['componentGroup', 'config', 'nav-data', 'website'].indexOf(v.docType) < 0 && !!v.renderedContent;
       }).map(function(v) {
         // for each document extract only certain properties
         var index = tokenizer.extract(
@@ -53,32 +52,33 @@ module.exports = function generateSearchIndexProcessorFactory(aliasMap, log, ren
               return 'renderedContent' === k ? cleanText(v[k]) : v[k];
             } else if (v[k]) {
               var m = v[k];
-              return [m.codeName || '',
-                      m.name || '',
-                      cleanText(m.renderedContent || ''),
-                      m.alias || '',
-                      m.eventTarget || '',
-                      m.eventType || ''
+              return [
+                m.codeName || '',
+                m.name || '',
+                cleanText(m.renderedContent || ''),
+                m.alias || '',
+                m.eventTarget || '',
+                m.eventType || ''
               ].join(' ');
             } else {
               return '';
             }
           }).join(' ').replace(/(\$(\w+))/g, '$1 $2'), {
-          language: "english",
-          remove_digits: true,
-          return_changed_case: true,
-          remove_duplicates: true
-        });
+            language: "english",
+            remove_digits: true,
+            return_changed_case: true,
+            remove_duplicates: true
+          });
 
         var filter = new bloom.BloomFilter(
           Math.ceil(index.length * Math.abs(Math.log(errorRate)) / (Math.pow(Math.LN2, 2))),
-          Math.ceil(Math.log2(1/errorRate)));
+          Math.ceil(Math.log2(1 / errorRate)));
 
         index.forEach(function(v) {
           filter.add(v);
         })
 
-        buffer.ensureCapacity(buffer.limit + filter.buckets.length*4);
+        buffer.ensureCapacity(buffer.limit + filter.buckets.length * 4);
 
         // append filter
         // use lodash for node <4.0 compat because buckets is a typed array
@@ -100,7 +100,7 @@ module.exports = function generateSearchIndexProcessorFactory(aliasMap, log, ren
         docType: 'search-data-index',
         id: 'search-index',
         name: 'search.index',
-        renderedContent: buffer.toBinary(0,buffer.offset)
+        renderedContent: buffer.toBinary(0, buffer.offset)
       });
 
       docs.push({

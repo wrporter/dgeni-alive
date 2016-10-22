@@ -6,7 +6,7 @@ module.exports = function navigationMapper_DOCS(aliasMap, log) {
 
   var debug = log.debug;
 
-  function docsMapper (pages, key) {
+  function docsMapper(pages, key) {
     var res = {
       name: 'Docs',
       type: 'groups',
@@ -16,14 +16,14 @@ module.exports = function navigationMapper_DOCS(aliasMap, log) {
 
     _(pages)
       .sortBy(docsMapper.sortBy)
-      .forEach(function (page) {
+      .forEach(function(page) {
         res.navItems.push({
           name: page.name,
           type: '',
           href: page.path,
-         title: page.title
+          title: page.title
         });
-    });
+      });
 
     return [res];
   };
@@ -41,7 +41,8 @@ module.exports = function navigationMapper_DOCS(aliasMap, log) {
     value: [
       'sortOrder',
       'name'
-    ]});
+    ]
+  });
 
   return docsMapper;
 };

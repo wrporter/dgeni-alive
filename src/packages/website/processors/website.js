@@ -5,31 +5,31 @@
  *
  * @dgService generateWebsiteProcessor
  */
-module.exports = function generateWebsiteProcessor (log) {
+module.exports = function generateWebsiteProcessor(log) {
 
   var debug = log.debug;
 
   var templates = [
-      'index.html',
-      'views/content.html',
-      'views/footer.html',
-      'views/main.html',
-      'views/navbar.html',
-      'views/sidebar.html',
-      'views/searchbox.html',
-      'scripts/a.directive.js',
-      'scripts/docs.controller.js',
-      'scripts/index.js',
-      'scripts/main.controller.js',
-      'scripts/navbar.controller.js',
-      'scripts/search.controller.js',
-      'scripts/pre.directive.js',
-      'scripts/bloomfilter.js',
-      'styles/docs.css',
-      'styles/github.css',
-      'styles/runnableExample.css',
-      'bower.json',
-      '.bowerrc'
+    'index.html',
+    'views/content.html',
+    'views/footer.html',
+    'views/main.html',
+    'views/navbar.html',
+    'views/sidebar.html',
+    'views/searchbox.html',
+    'scripts/a.directive.js',
+    'scripts/docs.controller.js',
+    'scripts/index.js',
+    'scripts/main.controller.js',
+    'scripts/navbar.controller.js',
+    'scripts/search.controller.js',
+    'scripts/pre.directive.js',
+    'scripts/bloomfilter.js',
+    'styles/docs.css',
+    'styles/github.css',
+    'styles/runnableExample.css',
+    'bower.json',
+    '.bowerrc'
   ];
   var locals = {};
 
@@ -57,7 +57,7 @@ module.exports = function generateWebsiteProcessor (log) {
     },
     templates: templates,
     $runBefore: ['rendering-docs'],
-    $process: function generateWebsiteProcessor (docs) {
+    $process: function generateWebsiteProcessor(docs) {
       this.templates.forEach(function(t) {
         docs.push({
           docType: 'website',

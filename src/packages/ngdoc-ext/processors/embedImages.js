@@ -14,24 +14,25 @@ module.exports = function embedImages(log, aliasMap, moduleMap, createDocMessage
     $process: function(docs) {
       _(docs)
         .groupBy('docType')
-        .tap(function(docs){
+        .tap(function(docs) {
           // TODO: make exclusions configurable
           // do not embed images references in app templates
           delete docs.website;
         })
         .forEach(function(areas) {
           areas.forEach(function(doc) {
-            doc.renderedContent = doc.renderedContent.replace(/(<img.+?src=['"])([^"']+)/ig, function (m0, m1, m2) {
+            doc.renderedContent = doc.renderedContent.replace(/(<img.+?src=['"])([^"']+)/ig, function(m0, m1, m2) {
               if (/^https?:\/{2}/.test(m2)) {
-                return m1+m2;
+                return m1 + m2;
               } else {
                 log.debug('Found local image %s in %s', m2, doc.id);
                 var type = mime.lookup(m2);
                 try {
-                  return m1+'data:' + type + ';base64,' + fs.readFileSync(path.join(path.dirname(doc.fileInfo.filePath), m2)).toString('base64');
-                } catch (e) {
+                  return m1 + 'data:' + type + ';base64,' + fs.readFileSync(path.join(path.dirname(doc.fileInfo.filePath), m2)).toString('base64');
+                }
+                catch (e) {
                   log.error('Can\'t read file: %s', e.message);
-                  return m1+m2;
+                  return m1 + m2;
                 }
               }
             })

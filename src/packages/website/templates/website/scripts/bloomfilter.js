@@ -15,21 +15,24 @@
     if (typeof m !== "number") a = m, m = a.length * 32;
 
     var n = Math.ceil(m / 32),
-        i = -1;
+      i = -1;
     this.m = m = n * 32;
     this.k = k;
 
     if (typedArrays) {
       var kbytes = 1 << Math.ceil(Math.log(Math.ceil(Math.log(m) / Math.LN2 / 8)) / Math.LN2),
-          array = kbytes === 1 ? Uint8Array : kbytes === 2 ? Uint16Array : Uint32Array,
-          kbuffer = new ArrayBuffer(kbytes * k),
-          buckets = this.buckets = new Int32Array(n);
+        array = kbytes === 1 ? Uint8Array : kbytes === 2 ? Uint16Array : Uint32Array,
+        kbuffer = new ArrayBuffer(kbytes * k),
+        buckets = this.buckets = new Int32Array(n);
       if (a) while (++i < n) buckets[i] = a[i];
       this._locations = new array(kbuffer);
     } else {
       var buckets = this.buckets = [];
-      if (a) while (++i < n) buckets[i] = a[i];
-      else while (++i < n) buckets[i] = 0;
+      if (a) {
+        while (++i < n) buckets[i] = a[i];
+      } else {
+        while (++i < n) buckets[i] = 0;
+      }
       this._locations = [];
     }
   }
@@ -37,11 +40,11 @@
   // See http://willwhim.wpengine.com/2011/09/03/producing-n-hash-functions-by-hashing-only-once/
   BloomFilter.prototype.locations = function(v) {
     var k = this.k,
-        m = this.m,
-        r = this._locations,
-        a = fnv_1a(v),
-        b = fnv_1a_b(a),
-        x = a % m;
+      m = this.m,
+      r = this._locations,
+      a = fnv_1a(v),
+      b = fnv_1a_b(a),
+      x = a % m;
     for (var i = 0; i < k; ++i) {
       r[i] = x < 0 ? (x + m) : x;
       x = (x + b) % m;
@@ -51,15 +54,15 @@
 
   BloomFilter.prototype.add = function(v) {
     var l = this.locations(v + ""),
-        k = this.k,
-        buckets = this.buckets;
+      k = this.k,
+      buckets = this.buckets;
     for (var i = 0; i < k; ++i) buckets[Math.floor(l[i] / 32)] |= 1 << (l[i] % 32);
   };
 
   BloomFilter.prototype.test = function(v) {
     var l = this.locations(v + ""),
-        k = this.k,
-        buckets = this.buckets;
+      k = this.k,
+      buckets = this.buckets;
     for (var i = 0; i < k; ++i) {
       var b = l[i];
       if ((buckets[Math.floor(b / 32)] & (1 << (b % 32))) === 0) {
@@ -72,7 +75,7 @@
   // Estimated cardinality.
   BloomFilter.prototype.size = function() {
     var buckets = this.buckets,
-        bits = 0;
+      bits = 0;
     for (var i = 0, n = buckets.length; i < n; ++i) bits += popcnt(buckets[i]);
     return -this.m * Math.log(1 - bits / this.m) / this.k;
   };
@@ -89,7 +92,7 @@
     var a = 2166136261;
     for (var i = 0, n = v.length; i < n; ++i) {
       var c = v.charCodeAt(i),
-          d = c & 0xff00;
+        d = c & 0xff00;
       if (d) a = fnv_multiply(a ^ d >> 8);
       a = fnv_multiply(a ^ c & 0xff);
     }

@@ -1,4 +1,4 @@
-module.exports = function errorTag (errorTagTransform) {
+module.exports = function errorTag(errorTagTransform) {
   return {
     name: 'error',
     docProperty: 'error',

@@ -22,26 +22,28 @@ module.exports = function getLinkInfo(getDocFromAlias, encodeCodeBlock, log) {
       title: title || url
     };
 
-    if ( !url ) {
+    if (!url) {
       throw new Error('Invalid url');
     }
 
     var docs = getDocFromAlias(url, currentDoc);
 
-    if ( !getLinkInfoImpl.useFirstAmbiguousLink && docs.length > 1 ) {
+    if (!getLinkInfoImpl.useFirstAmbiguousLink && docs.length > 1) {
 
       linkInfo.valid = false;
       linkInfo.errorType = 'ambiguous';
       linkInfo.error = 'Ambiguous link: "' + url + '".\n' +
-        docs.reduce(function(msg, doc) { return msg + '\n  "' + doc.id + '" ('+ doc.docType + ') : (' + doc.path + ' / ' + doc.fileInfo.relativePath + ')'; }, 'Matching docs: ');
+        docs.reduce(function(msg, doc) {
+          return msg + '\n  "' + doc.id + '" (' + doc.docType + ') : (' + doc.path + ' / ' + doc.fileInfo.relativePath + ')';
+        }, 'Matching docs: ');
 
-    } else if ( docs.length >= 1 ) {
+    } else if (docs.length >= 1) {
 
       linkInfo.url = docs[0].path;
       linkInfo.title = title || docs[0].name;
       linkInfo.type = 'doc';
 
-      if ( getLinkInfoImpl.relativeLinks && currentDoc && currentDoc.path ) {
+      if (getLinkInfoImpl.relativeLinks && currentDoc && currentDoc.path) {
         var currentFolder = path.dirname(currentDoc.path);
         var docFolder = path.dirname(linkInfo.url);
         var relativeFolder = path.relative(path.join('/', currentFolder), path.join('/', docFolder));
@@ -49,18 +51,18 @@ module.exports = function getLinkInfo(getDocFromAlias, encodeCodeBlock, log) {
         log.debug(currentDoc.path, docs[0].path, linkInfo.url);
       }
 
-    } else if ( url.indexOf('#') > 0 ) {
+    } else if (url.indexOf('#') > 0) {
       var pathAndHash = url.split('#');
       linkInfo = getLinkInfoImpl(pathAndHash[0], title, currentDoc);
       linkInfo.url = linkInfo.url + '#' + pathAndHash[1];
       return linkInfo;
 
-    } else if ( url.indexOf('/') === -1 && url.indexOf('#') !== 0 ) {
+    } else if (url.indexOf('/') === -1 && url.indexOf('#') !== 0) {
       var valid = false;
 
       // extension point, check url against externals
       if (getLinkInfoImpl.externalLinks) {
-        var link = _.find(getLinkInfoImpl.externalLinks, function (link) {
+        var link = _.find(getLinkInfoImpl.externalLinks, function(link) {
           return link.test(url);
         });
         if (link) {

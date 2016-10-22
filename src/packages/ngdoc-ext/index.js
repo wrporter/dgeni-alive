@@ -7,21 +7,20 @@ var path = require('path');
  */
 module.exports = new Package('ngdoc-ext', [require('dgeni-packages/ngdoc')])
 
-.factory(require('./services/getTypeLink'))
+  .factory(require('./services/getTypeLink'))
 
-// Add in the real processors for this package
-.processor(require('./processors/embedImages'))
-.processor(require('./processors/generateErrorsGroupArea'))
+  // Add in the real processors for this package
+  .processor(require('./processors/embedImages'))
+  .processor(require('./processors/generateErrorsGroupArea'))
 
-// add more templates location
-.config(function(templateFinder) {
-  templateFinder.templateFolders.unshift(path.resolve(__dirname, 'templates'));
-})
+  // add more templates location
+  .config(function(templateFinder) {
+    templateFinder.templateFolders.unshift(path.resolve(__dirname, 'templates'));
+  })
 
-// add filters
-.config(function(templateEngine, getInjectables) {
-  templateEngine.filters = templateEngine.filters.concat(getInjectables([
+  // add filters
+  .config(function(templateEngine, getInjectables) {
+    templateEngine.filters = templateEngine.filters.concat(getInjectables([
       require('./rendering/filters/type-link')
-  ]));
-})
-;
+    ]));
+  });

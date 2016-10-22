@@ -31,9 +31,9 @@ describe("links inline tag handler", function() {
       file: 'some/file.js',
       startingLine: 200,
       renderedContent: "Some text with a {@link some/url link} to somewhere\n" +
-                       "Another text with a {@link another/url that spans\n two lines}\n" +
-                       "Some example with a code link: {@link module:ngOther.directive:ngDirective}\n" +
-                       "A link to reachable code: {@link ngInclude}"
+      "Another text with a {@link another/url that spans\n two lines}\n" +
+      "Some example with a code link: {@link module:ngOther.directive:ngDirective}\n" +
+      "A link to reachable code: {@link ngInclude}"
     };
 
   });

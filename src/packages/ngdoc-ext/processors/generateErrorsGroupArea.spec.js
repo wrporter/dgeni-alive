@@ -17,26 +17,50 @@ describe("generateErrorsGroupAreaProcessor", function() {
       id: 'mod1',
       name: 'mod1',
       components: [
-        { docType: 'a', id: 'a1' },
-        { docType: 'b', id: 'b1' },
-        { docType: 'error', id: 'error1'}
+        {
+          docType: 'a',
+          id: 'a1'
+        },
+        {
+          docType: 'b',
+          id: 'b1'
+        },
+        {
+          docType: 'error',
+          id: 'error1'
+        }
       ]
     });
     moduleMap.set('mod2', {
       id: 'mod2',
       name: 'mod2',
       components: [
-        { docType: 'a', id: 'a2' },
-        { docType: 'b', id: 'b2' },
-        { docType: 'error', id: 'error2'}
+        {
+          docType: 'a',
+          id: 'a2'
+        },
+        {
+          docType: 'b',
+          id: 'b2'
+        },
+        {
+          docType: 'error',
+          id: 'error2'
+        }
       ]
     });
     moduleMap.set('mod3', {
       id: 'mod3',
       name: 'mod3',
       components: [
-        { docType: 'a', id: 'a3' },
-        { docType: 'b', id: 'b3' },
+        {
+          docType: 'a',
+          id: 'a3'
+        },
+        {
+          docType: 'b',
+          id: 'b3'
+        },
       ]
     });
     processor.$process(docs);

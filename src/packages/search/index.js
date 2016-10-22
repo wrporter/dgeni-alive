@@ -6,7 +6,5 @@ var path = require('path');
  * @description Package maintaining search index processing
  */
 module.exports = new Package('search', [])
-
 // Add in the real processors for this package
-.processor(require('./processors/search-index'))
-;
+  .processor(require('./processors/search-index'));

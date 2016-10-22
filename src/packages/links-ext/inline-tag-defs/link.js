@@ -24,7 +24,7 @@ module.exports = function linkInlineTagDef(getLinkInfo, createDocMessage, log) {
 
         var linkInfo = getLinkInfo(uri, title, doc);
 
-        if ( !linkInfo.valid ) {
+        if (!linkInfo.valid) {
           log.warn(createDocMessage(linkInfo.error, doc));
         }
 
@@ -34,7 +34,7 @@ module.exports = function linkInlineTagDef(getLinkInfo, createDocMessage, log) {
         }
         link += '>' + encoder.htmlEncode(linkInfo.title) + '</a>';
 
-        return  link;
+        return link;
       });
     }
   };

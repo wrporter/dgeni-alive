@@ -1,1 +1,4 @@
-angular.module('docApp').constant('DOCS_NAVIGATION', {$ doc.areas | json $});
+angular.module('docApp').constant('DOCS_NAVIGATION', {
+  $ doc.areas | json
+  $
+});

@@ -12,7 +12,7 @@ var fs = require('fs');
  *
  * @name exampleDependenciesBuilder
  */
-module.exports = function exampleDependenciesBuilder (readFilesProcessor, log, generateExamplesProcessor, exampleMap) {
+module.exports = function exampleDependenciesBuilder(readFilesProcessor, log, generateExamplesProcessor, exampleMap) {
   /**
    * Regular expression to check if path is external
    * @type {RegExp}
@@ -28,7 +28,7 @@ module.exports = function exampleDependenciesBuilder (readFilesProcessor, log, g
   return {
     $runAfter: ['adding-extra-docs'],
     $runBefore: ['generateExamplesProcessor'],
-    $process: function (docs) {
+    $process: function(docs) {
       /**
        * Deployments file storage, each de
        */
@@ -56,7 +56,7 @@ module.exports = function exampleDependenciesBuilder (readFilesProcessor, log, g
    * @param {Number} index item index in arr
    * @param {Array} arr array of deployment dependencies
    */
-  function processDependency (docs, name, item, index, arr) {
+  function processDependency(docs, name, item, index, arr) {
     if (!REMOTE_REG.test(item)) {
       // local file, add to copy items
       var fileDoc = makeFileDoc(name, item);
@@ -72,7 +72,7 @@ module.exports = function exampleDependenciesBuilder (readFilesProcessor, log, g
    * @param {String} script example dependency
    * @returns {Object} document entry
    */
-  function makeFileDoc (name, script) {
+  function makeFileDoc(name, script) {
     return {
       docType: DOC_TYPE,
       id: name + '/' + script,
@@ -87,7 +87,7 @@ module.exports = function exampleDependenciesBuilder (readFilesProcessor, log, g
   /**
    * Creates unique folder name for the current deployment
    */
-  function makeUniqueName (deployments, name) {
+  function makeUniqueName(deployments, name) {
     if (!name) {
       name = 'deployment';
     }

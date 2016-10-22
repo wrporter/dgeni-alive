@@ -13,7 +13,7 @@ module.exports = function errorTagTransform(createDocMessage) {
    * @param {Tag} tag tag to process
    * @param {String} tag value
    */
-  function transformError (doc, tag, value) {
+  function transformError(doc, tag, value) {
     doc.area = area;
 
     return true;

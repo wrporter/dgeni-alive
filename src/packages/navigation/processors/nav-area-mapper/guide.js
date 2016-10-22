@@ -6,7 +6,7 @@ module.exports = function navigationMapper_GUIDE(aliasMap, log) {
 
   var debug = log.debug;
 
-  function guideMapper (pages, key) {
+  function guideMapper(pages, key) {
     var res = {
       name: 'Guide',
       type: 'groups',
@@ -16,14 +16,14 @@ module.exports = function navigationMapper_GUIDE(aliasMap, log) {
 
     _(pages)
       .sortBy(guideMapper.sortBy)
-      .forEach(function (page) {
+      .forEach(function(page) {
         res.navItems.push({
           name: page.name,
           type: '',
           href: page.path,
-         title: page.title
+          title: page.title
         });
-    });
+      });
 
     return [res];
   };
@@ -41,7 +41,8 @@ module.exports = function navigationMapper_GUIDE(aliasMap, log) {
     value: [
       'sortOrder',
       'name'
-    ]});
+    ]
+  });
 
   return guideMapper;
 };

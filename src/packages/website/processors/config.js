@@ -22,16 +22,16 @@ module.exports = function generateConfigProcessor(log) {
       return this;
     },
     $runBefore: ['rendering-docs'],
-    $process: function (docs) {
+    $process: function(docs) {
       docs.push({
         area: 'website',
         docType: 'config-data',
         id: 'config',
         name: 'data/config.js',
         config: {
-            TITLE: title,
-            ROOT: root,
-            VERSION: version
+          TITLE: title,
+          ROOT: root,
+          VERSION: version
         }
       });
     }

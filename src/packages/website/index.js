@@ -7,7 +7,7 @@ var path = require('path');
  */
 module.exports = new Package('website', [require('../navigation'), require('../search')])
 
-  // Add in the real processors for this package
+// Add in the real processors for this package
   .processor(require('./processors/computePaths'))
   .processor(require('./processors/config'))
   .processor(require('./processors/website'))
@@ -62,5 +62,4 @@ module.exports = new Package('website', [require('../navigation'), require('../s
       pathTemplate: 'web-data/template.js',
       outputPathTemplate: '${name}'
     });
-  })
-;
+  });

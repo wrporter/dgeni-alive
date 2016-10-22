@@ -2,13 +2,13 @@
 {% extends "api/api.template.html" %}
 
 {% block additional %}
-    <h2>Directive Info</h2>
+    <h2>Component Info</h2>
     <ul>
         {% if doc.scope %}
-            <li>This directive creates new scope.</li>{% endif %}
-        <li>This directive executes at priority level {$ doc.priority $}.</li>
+            <li>This component creates new scope.</li>{% endif %}
+        <li>This component executes at priority level {$ doc.priority $}.</li>
         {% if doc.multiElement %}
-            <li>This directive can be used as {@link $compile#-multielement- multiElement}</li>{% endif %}
+            <li>This component can be used as {@link $compile#-multielement- multiElement}</li>{% endif %}
     </ul>
 
     {% block usage %}
@@ -21,13 +21,13 @@
                 {% if doc.restrict.element %}
                     <li>as element:
                         {% if doc.name.indexOf('ng') == 0 -%}
-                            (This directive can be used as custom element, but be aware of
+                            (This component can be used as custom element, but be aware of
                             <a href="guide/ie">IE restrictions</a>).
                         {%- endif %}
                         {% code %}
                             <{$ doc.name | dashCase $}
                             {%- for param in doc.params -%}
-                                {# skip attribute with name equal to directive name #}
+                                {# skip attribute with name equal to component name #}
                                 {%- if (doc.name != param.alias and doc.name != param.name) %}
                                     {$ lib.directiveParam(param, '="', '"') $}
                                 {%- endif -%}

@@ -9,6 +9,6 @@ module.exports = new Package('jsdoc-ext', [require('dgeni-packages/jsdoc')])
 // Add in the real processors for this package
 
 // Add more tag definitions
-.config(function(parseTagsProcessor, getInjectables) {
-  parseTagsProcessor.tagDefinitions = parseTagsProcessor.tagDefinitions.concat(getInjectables(require('./tag-defs')));
-});
+  .config(function(parseTagsProcessor, getInjectables) {
+    parseTagsProcessor.tagDefinitions = parseTagsProcessor.tagDefinitions.concat(getInjectables(require('./tag-defs')));
+  });

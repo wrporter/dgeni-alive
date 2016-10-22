@@ -8,7 +8,7 @@ module.exports = function sortOrderTagDef() {
     transforms: function(doc, tag, value) {
       return parseInt(value, 10) || 0;
     },
-    defaultFn: function () {
+    defaultFn: function() {
       return 0;
     }
   }

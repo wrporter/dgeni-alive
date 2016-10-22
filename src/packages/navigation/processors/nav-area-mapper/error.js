@@ -6,7 +6,7 @@ module.exports = function navigationMapper_ERROR(aliasMap, log) {
 
   var debug = log.debug;
 
-  function errorMapper (pages, key) {
+  function errorMapper(pages, key) {
     var res = {
       name: 'Errors',
       title: 'Error Reference',
@@ -18,9 +18,12 @@ module.exports = function navigationMapper_ERROR(aliasMap, log) {
       .filter('module')  // take only the modules on the top level
       .sortBy('module')  // alphabetic sort
       .groupBy('module') // group by name
-      .forEach(function (components, moduleName) {
+      .forEach(function(components, moduleName) {
         debug('Processing module: %s', moduleName);
-        var mod = _.find(components, {name: moduleName, module: moduleName});
+        var mod = _.find(components, {
+          name: moduleName,
+          module: moduleName
+        });
 
         var navGroup = {
           name: moduleName,
@@ -31,17 +34,17 @@ module.exports = function navigationMapper_ERROR(aliasMap, log) {
         res.navItems.push(navGroup);
 
         _(components)
-        .filter(function (it) {
-          return it.docType !== 'module' && it.docType != 'overview';
-        })
-        .sortBy('name')
-        .forEach(function (error) {
-          navGroup.navItems.push({
-            name: error.name,
-            type: error.docType,
-            href: error.path,
+          .filter(function(it) {
+            return it.docType !== 'module' && it.docType != 'overview';
+          })
+          .sortBy('name')
+          .forEach(function(error) {
+            navGroup.navItems.push({
+              name: error.name,
+              type: error.docType,
+              href: error.path,
+            });
           });
-        });
       });
 
     return [res];

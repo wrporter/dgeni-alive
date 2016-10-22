@@ -3,6 +3,6 @@ module.exports = function(extractTypeTransform, extractNameTransform, wholeTagTr
     name: 'throws',
     aliases: ['throw'],
     multi: true,
-    transforms: [ extractTypeTransform, extractNameTransform, wholeTagTransform ]
+    transforms: [extractTypeTransform, extractNameTransform, wholeTagTransform]
   };
 };

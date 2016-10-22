@@ -6,8 +6,7 @@ module.exports = function generateNavigationProcessor(aliasMap, log) {
 
   var debug = log.debug;
 
-  var AREAS = {
-  };
+  var AREAS = {};
 
   return {
     $runAfter: ['paths-computed'],
@@ -15,28 +14,28 @@ module.exports = function generateNavigationProcessor(aliasMap, log) {
     /**
      * Appends or replaces mappers
      */
-    addMappers: function (mappers) {
+    addMappers: function(mappers) {
       mappers.forEach(function(mapper) {
         AREAS[mapper.area] = mapper;
       })
     },
-    $process: function (docs) {
+    $process: function(docs) {
 
       var areas = {}, areaIds = [];
       _(docs)
-      .filter(function (it) {
-        return it.area;
-      }).groupBy('area').forEach(function (pages, key) {
+        .filter(function(it) {
+          return it.area;
+        }).groupBy('area').forEach(function(pages, key) {
         debug('Start process area:', key);
 
         // take area aliases and link doc to first one
         var doc = aliasMap.getDocs(key + ':index');
         if (doc.length > 0) {
-            doc = doc[0];
+          doc = doc[0];
         } else {
-            log.warn('No index document found for "%s"\nCreate %s/index.ngdoc file in the documents area with template' +
-                     '\n===================\n@ngdoc overview\n@name index\n@area %s\n@description Module Overview', key, key, key);
-            doc = { path: key };
+          log.warn('No index document found for "%s"\nCreate %s/index.ngdoc file in the documents area with template' +
+            '\n===================\n@ngdoc overview\n@name index\n@area %s\n@description Module Overview', key, key, key);
+          doc = {path: key};
         }
 
         if (AREAS[key]) {

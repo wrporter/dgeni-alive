@@ -1,5 +1,5 @@
 module.exports = [
-    require('./error-tag'),
-    require('./since-tag'),
-    require('./throws-tag')
+  require('./error-tag'),
+  require('./since-tag'),
+  require('./throws-tag')
 ];

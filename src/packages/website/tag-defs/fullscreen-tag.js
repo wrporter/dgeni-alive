@@ -4,6 +4,10 @@
 module.exports = function() {
   return {
     name: 'fullscreen',
-    transforms: [function (doc) { return true; }]
+    transforms: [
+      function(doc) {
+        return true;
+      }
+    ]
   };
 };
